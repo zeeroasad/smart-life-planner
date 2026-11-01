@@ -48,7 +48,7 @@ Smart Life Planner is a single MERN web platform for managing a personal budget,
 ## Setup
 
 1. Install Node.js 20 or newer and run MongoDB locally, or obtain a MongoDB Atlas URI.
-2. Copy `.env.example` to `server/.env` and set at least `MONGODB_URI` and `JWT_ACCESS_SECRET`.
+2. Copy `server/.env.example` to `server/.env` and set at least `MONGODB_URI`, `JWT_ACCESS_SECRET`, and `JWT_REFRESH_SECRET`.
 3. From `server/`, run `npm install`, then `npm run seed:admin` to create the configured admin.
 4. Start the API with `npm run dev` from `server/`.
 5. From `client/`, run `npm install` and `npm run dev`.
@@ -57,6 +57,16 @@ Smart Life Planner is a single MERN web platform for managing a personal budget,
 On Windows systems where PowerShell blocks `npm.ps1`, use the equivalent `npm.cmd` command (for example, `npm.cmd install` and `npm.cmd run build`).
 
 The application uses the real API and MongoDB backend; when the API is unavailable, requests fail visibly rather than switching to local mock data. Configure `MONGODB_URI` in `server/.env` with your MongoDB Atlas connection string and the actual database-user password. To enable live Groq suggestions, set `AI_API_KEY` in the same file. Never put secrets in client-side environment variables or commit `server/.env`.
+
+## Deploying to Vercel and Railway
+
+The repository includes a root `vercel.json` and `railway.toml` for this monorepo. Connect the GitHub repository to both services and use the repository root as the project/service root:
+
+- **Vercel** builds `client/` and publishes `client/dist`. Add `VITE_API_URL` in the Vercel project's Environment Variables, set to the Railway public URL ending in `/api` (see `client/.env.example`). This is a public API URL, not a secret.
+- **Railway** installs and starts `server/`, and checks `/health`. Set `MONGODB_URI`, `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET`, and `CLIENT_URL` in the Railway service Variables. Set `CLIENT_URL` to the exact deployed Vercel origin. `COOKIE_SECURE=true` and `COOKIE_SAME_SITE=none` are required for cross-site auth cookies over HTTPS.
+- Optionally set `AI_API_KEY` in Railway to enable live Groq suggestions. Railway provides `PORT`; do not hardcode it.
+
+The deployment config files automate build/start behavior, but they cannot create or populate cloud project variables. Add the Railway URL to Vercel and the Vercel origin to Railway after the providers assign their public domains. Use fresh database/API credentials and keep all secrets in Railway, never in Vercel or the repository.
 
 Useful production-style commands:
 

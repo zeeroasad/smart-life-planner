@@ -2,7 +2,8 @@ import axios from 'axios';
 
 let accessToken = null;
 let refreshPromise = null;
-export const api = axios.create({ baseURL: '/api', withCredentials: true, headers: { 'Content-Type': 'application/json' } });
+const apiBaseUrl = import.meta.env.VITE_API_URL?.replace(/\/+$/, '') || '/api';
+export const api = axios.create({ baseURL: apiBaseUrl, withCredentials: true, headers: { 'Content-Type': 'application/json' } });
 export function setAccessToken(token) { accessToken = token; }
 export function clearAccessToken() { accessToken = null; }
 

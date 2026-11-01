@@ -21,6 +21,7 @@ app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
 app.use(requestLogger);
 
+app.get('/', (req, res) => res.json({ success: true, data: { service: 'Smart Life Planner API', status: 'ok' }, message: 'API is running.', meta: {} }));
 app.get('/health', (req, res) => res.json({ success: true, data: { status: 'ok', database: 'configured' }, message: 'Smart Life Planner API is healthy.', meta: {} }));
 app.get('/api/meta', (req, res) => res.json({ success: true, data: { currencies: config.supportedCurrencies, categories: config.budgetCategories }, message: 'Application metadata.', meta: {} }));
 app.use('/api/auth', authRoutes);
