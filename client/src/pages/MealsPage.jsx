@@ -13,7 +13,7 @@ export default function MealsPage() {
   const load = async () => { setLoading(true); setError(''); try { const { data } = await api.get('/meals'); setPlans(data.data.plans); } catch (err) { setError(apiError(err)); } finally { setLoading(false); } };
   useEffect(() => { load(); }, []);
   const suggest = async () => { setBusy(true); setError(''); try { const { data } = await api.post('/ai/meal-plan', { goal: user.health.goal, calorieTarget: user.health.calorieTarget, allergies: user.health.allergies, dietaryPreference: user.health.dietaryPreference }); setSuggestion(data.data); } catch (err) { setError(apiError(err)); } finally { setBusy(false); } };
-  const save = async () => { try { await api.post('/meals', { ...suggestion, goal: user.health.goal, calorieTarget: user.health.calorieTarget, dietaryPreference: user.health.dietaryPreference, allergies: user.health.allergies }); setSuggestion(null); await load(); } catch (err) { setError(apiError(err)); } };
+  const save = async () => { setError(''); try { const { data } = await api.post('/meals', { ...suggestion, goal: user.health.goal, calorieTarget: user.health.calorieTarget, dietaryPreference: user.health.dietaryPreference, allergies: user.health.allergies }); setPlans((current) => [data.data, ...current]); setSuggestion(null); } catch (err) { setError(apiError(err)); } };
   const generate = async (plan) => { try { await api.post('/groceries/from-meal-plan', { mealPlanId: plan.id, month: currentMonth(), name: `${plan.title} groceries` }); alert('Grocery list generated.'); } catch (err) { setError(apiError(err)); } };
   if (loading) return <Loading label="Loading your meal plans…" />;
   if (!plans) return <LoadError label="Your meal plans could not be loaded." error={error} onRetry={load} />;

@@ -10,7 +10,7 @@ export default function AdminPage() {
   const { user } = useAuth(); const [accounts, setAccounts] = useState(null); const [error, setError] = useState(''); const [loading, setLoading] = useState(true);
   const load = async () => { setLoading(true); setError(''); try { const { data } = await api.get('/admin/accounts'); setAccounts(data.data); } catch (err) { setError(apiError(err)); } finally { setLoading(false); } };
   useEffect(() => { if (user?.role === 'admin') load(); else { setAccounts([]); setLoading(false); } }, [user]);
-  const toggle = async (account) => { try { await api.post(`/admin/accounts/${account._id}/` + (account.status === 'active' ? 'disable' : 'enable')); await load(); } catch (err) { setError(apiError(err)); } };
+  const toggle = async (account) => { setError(''); try { const status = account.status === 'active' ? 'disable' : 'enable'; await api.post(`/admin/accounts/${account._id}/${status}`); setAccounts((current) => current.map((row) => row._id === account._id ? { ...row, status: status === 'disable' ? 'disabled' : 'active' } : row)); } catch (err) { setError(apiError(err)); } };
   if (loading) return <Loading label="Loading account metadata…" />;
   if (user?.role !== 'admin') return <Card title="Admin only"><p className="text-sm text-moss">This area is limited to administrators.</p></Card>;
   if (!accounts) return <LoadError label="Account metadata could not be loaded." error={error} onRetry={load} />;
