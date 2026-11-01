@@ -60,10 +60,10 @@ The application uses the real API and MongoDB backend; when the API is unavailab
 
 ## Deploying to Vercel and Railway
 
-The repository includes a root `vercel.json` and `railway.toml` for this monorepo. Connect the GitHub repository to both services and use the repository root as the project/service root:
+The repository includes Vercel and Railway deployment configuration for this monorepo. Connect the GitHub repository to both services:
 
-- **Vercel** builds `client/` and publishes `client/dist`. Add `VITE_API_URL` in the Vercel project's Environment Variables, set to the Railway public URL ending in `/api` (see `client/.env.example`). This is a public API URL, not a secret.
-- **Railway** installs and starts `server/`, and checks `/health`. Set `MONGODB_URI`, `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET`, and `CLIENT_URL` in the Railway service Variables. Set `CLIENT_URL` to the exact deployed Vercel origin. `COOKIE_SECURE=true` and `COOKIE_SAME_SITE=none` are required for cross-site auth cookies over HTTPS.
+- **Vercel**: set the project Root Directory to `client`; `vercel.json` then uses `npm install`, `npm run build`, and `dist`. Add `VITE_API_URL` in the Vercel project's Environment Variables, set to the Railway public URL ending in `/api` (see `client/.env.example`). This is a public API URL, not a secret.
+- **Railway**: keep the service root at the repository root so `railway.toml` can install and start `server/`, and check `/health`. Set `MONGODB_URI`, `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET`, and `CLIENT_URL` in the Railway service Variables. Set `CLIENT_URL` to the exact deployed Vercel origin. `COOKIE_SECURE=true` and `COOKIE_SAME_SITE=none` are required for cross-site auth cookies over HTTPS.
 - Optionally set `AI_API_KEY` in Railway to enable live Groq suggestions. Railway provides `PORT`; do not hardcode it.
 
 The deployment config files automate build/start behavior, but they cannot create or populate cloud project variables. Add the Railway URL to Vercel and the Vercel origin to Railway after the providers assign their public domains. Use fresh database/API credentials and keep all secrets in Railway, never in Vercel or the repository.
