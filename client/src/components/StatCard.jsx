@@ -1,0 +1,1 @@
+export default function StatCard({ label, value, hint, accent = 'bg-mint' }) { return <div className="panel relative overflow-hidden p-6"><div className={`absolute right-0 top-0 h-2 w-20 rounded-bl-full ${accent}`} /><p className="eyebrow">{label}</p><p className="stat-number">{value}</p><p className="mt-2 text-xs text-moss">{hint}</p></div>; }

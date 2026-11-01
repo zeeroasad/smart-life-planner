@@ -1,0 +1,1 @@
+export default function EmptyState({ title, body, action }) { return <div className="rounded-2xl border border-dashed border-line bg-paper p-7 text-center"><p className="font-black">{title}</p><p className="mx-auto mt-2 max-w-sm text-sm leading-6 text-moss">{body}</p>{action && <div className="mt-4">{action}</div>}</div>; }

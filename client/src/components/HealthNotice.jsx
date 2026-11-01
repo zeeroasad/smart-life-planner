@@ -1,0 +1,1 @@
+export default function HealthNotice() { return <div className="rounded-2xl border border-amber/70 bg-amber/20 px-4 py-3 text-sm text-ink"><strong>Important:</strong> AI meal suggestions are not medical or dietary advice. Review them with a qualified professional.</div>; }
