@@ -46,7 +46,7 @@ export default function Sidebar() {
     <div className="sidebar-rule mx-2 mt-8" />
     <div className="mt-8">
       <p className="sidebar-label mb-3 px-3">Your control room</p>
-      <nav aria-label="Main navigation" className="space-y-1.5">
+      <nav aria-label="Main navigation" className="mobile-nav space-y-1.5">
         {links.map((link, index) => <LinkItem key={link.to} link={link} index={index} />)}
         {user?.role === 'admin' && <LinkItem link={{ to: '/admin', label: 'Admin', icon: 'admin' }} index={links.length} />}
       </nav>
