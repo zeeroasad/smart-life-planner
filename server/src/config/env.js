@@ -14,10 +14,13 @@ const toBoolean = (value, fallback = false) => {
 
 const list = (value, fallback) => (value ? value.split(',').map((item) => item.trim()).filter(Boolean) : fallback);
 
+const clientUrls = list(process.env.CLIENT_URL, ['http://localhost:5173']);
+
 export const config = {
   nodeEnv: process.env.NODE_ENV || 'development',
   port: toNumber(process.env.PORT, 5000),
-  clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
+  clientUrl: clientUrls[0],
+  clientUrls,
   mongoUri: process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/smart-life-planner',
   jwtAccessSecret: process.env.JWT_ACCESS_SECRET || 'local-access-secret-change-me',
   jwtRefreshSecret: process.env.JWT_REFRESH_SECRET || 'local-refresh-secret-change-me',

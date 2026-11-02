@@ -16,7 +16,7 @@ import dashboardRoutes from './routes/dashboardRoutes.js';
 
 const app = express();
 app.use(helmet());
-app.use(cors({ origin: config.clientUrl, credentials: true }));
+app.use(cors({ origin: config.clientUrls, credentials: true }));
 app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
 app.use(requestLogger);
