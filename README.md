@@ -1,6 +1,6 @@
-# Smart Life Planner
+# SLP
 
-Smart Life Planner is a single MERN web platform for managing a personal budget, grocery shopping, and fitness-oriented meal planning. The modules share one account and one MongoDB database: a meal plan can generate a grocery list, and the grocery list's estimated total is included in the Groceries budget view.
+SLP is a single MERN web platform for managing a personal budget, grocery shopping, and fitness-oriented meal planning. The modules share one account and one MongoDB database: a meal plan can generate a grocery list, and the grocery list's estimated total is included in the Groceries budget view.
 
 ## Assumptions
 
